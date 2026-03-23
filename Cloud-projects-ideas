@@ -1,49 +1,122 @@
-Red base en AWS con Terraform
-Objetivo: crear VPC, subredes públicas/privadas, rutas, NAT y security groups.
-Entregable: entorno dev desplegable con un solo comando.
-Criterio de éxito: cualquier recurso nuevo entra por módulos, no por copiar código.
-Estado remoto y entornos
-Objetivo: usar backend remoto para state + locking, separar dev y prod.
-Entregable: pipeline que haga plan por pull request.
-Criterio de éxito: nunca aplicar cambios directo desde local en prod.
-App Dockerizada
-Objetivo: containerizar una API simple (healthcheck, logs estructurados, variables de entorno).
-Entregable: imagen versionada en registry.
-Criterio de éxito: imagen pequeña, reproducible y sin secretos embebidos.
-Despliegue en ECS Fargate
-Objetivo: desplegar la app detrás de balanceador.
-Entregable: endpoint público con HTTPS.
-Criterio de éxito: mínimo 2 tareas, rolling update sin downtime visible.
-Base de datos gestionada
-Objetivo: integrar RDS o DynamoDB según caso.
-Entregable: app leyendo/escribiendo datos reales.
-Criterio de éxito: backups habilitados y política mínima de acceso.
-CI completo con GitHub Actions
-Objetivo: pipeline con lint, test, build de imagen y terraform plan.
-Entregable: flujo por PR y flujo de deploy por merge.
-Criterio de éxito: si falla test o policy check, no hay deploy.
-CD seguro con aprobación
-Objetivo: separar etapas staging y prod con aprobación manual para prod.
-Entregable: promoción de versión entre ambientes.
-Criterio de éxito: rollback documentado y probado.
-Observabilidad real
-Objetivo: métricas, logs centralizados y al menos 3 alertas útiles.
-Entregable: dashboard con latencia, errores, uso de CPU/memoria.
-Criterio de éxito: puedes detectar una caída en menos de 5 minutos.
-Seguridad aplicada
-Objetivo: IAM least privilege, escaneo de imagen, manejo de secretos.
-Entregable: reporte de hallazgos y correcciones.
-Criterio de éxito: cero secretos en código y permisos wildcard reducidos.
-Ejercicio de incidente
-Objetivo: simular fallo (por ejemplo, romper conexión DB o matar tareas).
-Entregable: runbook + postmortem corto.
-Criterio de éxito: tiempo de recuperación medido y acciones de mejora claras.
-Optimización de costo
-Objetivo: medir costo de arquitectura actual y reducirlo 20-30%.
-Entregable: comparativa antes/después.
-Criterio de éxito: mejoras sin degradar SLO básico.
-Proyecto final de portfolio
-Objetivo: un sistema completo en AWS con Terraform + Docker + CI/CD + monitoreo.
-Entregable: repo público bien documentado.
-Criterio de éxito: cualquier persona puede desplegar una versión dev siguiendo README.
+# Roadmap Cloud/DevOps en AWS (practica inicial y bajo costo)
+
+Objetivo general: aprender fundamentos reales de Cloud/DevOps construyendo un sistema deployable, sin disparar costos en AWS.
+
+Regla de oro de costos: todo ambiente de practica debe poder apagarse automaticamente y volver a levantarse con Terraform.
+
+## Fase 1 - Infraestructura base con Terraform
+
+Proyecto: Red base en AWS con Terraform
+
+- Objetivo: crear VPC, subredes publicas/privadas, tablas de rutas y security groups usando modulos.
+- Entregable: `terraform apply` levanta el entorno dev completo.
+- Criterio de exito: cualquier recurso nuevo se agrega por modulo, no copiando bloques.
+- Control de costo:
+	- Evitar NAT Gateway al inicio (es caro en laboratorios).
+	- Si necesitas salida a internet desde privada, usar alternativa temporal mas barata (NAT instance) o redisenar para no requerirlo en dev.
+
+Proyecto: Estado remoto y entornos
+
+- Objetivo: usar backend remoto para `state` + locking y separar `dev` y `prod`.
+- Entregable: pipeline que ejecute `terraform plan` en cada pull request.
+- Criterio de exito: nunca aplicar cambios en `prod` desde local.
+- Control de costo:
+	- Un solo entorno `dev` al principio.
+	- `prod` solo cuando la base este estable.
+
+## Fase 2 - Aplicacion y contenedores
+
+Proyecto: App dockerizada
+
+- Objetivo: containerizar una API simple (healthcheck, logs estructurados, variables de entorno).
+- Entregable: imagen versionada en registry.
+- Criterio de exito: imagen pequena, reproducible y sin secretos embebidos.
+- Control de costo:
+	- Usar una app minima y base image liviana.
+	- Limitar frecuencia de builds para no generar consumo innecesario.
+
+Proyecto: Base de datos gestionada (eleccion consciente)
+
+- Objetivo: integrar persistencia real.
+- Entregable: app leyendo/escribiendo datos.
+- Criterio de exito: backups y acceso minimo necesarios.
+- Control de costo:
+	- Empezar con DynamoDB en modo on-demand para practicas de bajo trafico.
+	- Si usas RDS, arrancar con instancia pequena y apagado programado fuera de horario.
+
+## Fase 3 - Despliegue en AWS
+
+Proyecto: Despliegue en ECS Fargate
+
+- Objetivo: desplegar la app detras de un balanceador.
+- Entregable: endpoint publico con HTTPS.
+- Criterio de exito: despliegue estable con rolling update.
+- Control de costo:
+	- En dev, 1 tarea es suficiente (2 tareas solo para pruebas puntuales de alta disponibilidad).
+	- Reducir CPU/memoria al minimo funcional y medir.
+	- Destruir entorno cuando no se use.
+
+## Fase 4 - CI/CD con seguridad
+
+Proyecto: CI completo con GitHub Actions
+
+- Objetivo: pipeline con lint, test, build de imagen y `terraform plan`.
+- Entregable: flujo por PR + deploy por merge a rama principal.
+- Criterio de exito: si falla test o policy check, no hay deploy.
+- Control de costo:
+	- Correr jobs pesados solo en cambios relevantes.
+	- Evitar reconstruir imagen si no hubo cambios en app.
+
+Proyecto: CD seguro con aprobacion
+
+- Objetivo: separar `staging` y `prod` con aprobacion manual para prod.
+- Entregable: promocion de version entre ambientes.
+- Criterio de exito: rollback documentado y probado.
+- Control de costo:
+	- Mantener `staging` pequeno y, si es posible, temporal.
+
+## Fase 5 - Operacion real
+
+Proyecto: Observabilidad real
+
+- Objetivo: metricas, logs centralizados y alertas utiles.
+- Entregable: dashboard con latencia, errores y uso de CPU/memoria.
+- Criterio de exito: detectar una caida en menos de 5 minutos.
+- Control de costo:
+	- Retencion de logs corta en dev.
+	- Crear solo dashboards y alarmas clave al inicio.
+
+Proyecto: Seguridad aplicada
+
+- Objetivo: IAM least privilege, escaneo de imagen y gestion de secretos.
+- Entregable: reporte de hallazgos y correcciones.
+- Criterio de exito: cero secretos en codigo y permisos wildcard minimizados.
+
+Proyecto: Ejercicio de incidente
+
+- Objetivo: simular una falla (DB caida o tasks detenidas).
+- Entregable: runbook + postmortem corto.
+- Criterio de exito: tiempo de recuperacion medido y acciones concretas de mejora.
+
+## Fase 6 - Madurez y portfolio
+
+Proyecto: Optimizacion de costo
+
+- Objetivo: medir costo real y reducirlo 20-30% sin romper el SLO basico.
+- Entregable: comparativa antes/despues con decisiones tecnicas justificadas.
+- Criterio de exito: mejora de costo demostrable con metricas.
+
+Proyecto: Portfolio final
+
+- Objetivo: publicar un sistema completo con Terraform + Docker + CI/CD + monitoreo.
+- Entregable: repositorio publico bien documentado.
+- Criterio de exito: cualquier persona puede desplegar `dev` siguiendo el README.
+
+## Checklist anti-costos (siempre activo)
+
+- Todo recurso nuevo debe tener `tags` (proyecto, entorno, owner, fecha).
+- Configurar alertas de presupuesto en AWS Budgets desde el primer dia.
+- Programar apagado/encendido de recursos de desarrollo.
+- Evitar recursos premium hasta tener necesidad real medida.
+- Revisar costo semanalmente y registrar ajustes.
 

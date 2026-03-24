@@ -9,3 +9,12 @@ variable "public_subnet_ids" {
 variable "private_subnet_ids" {
     type = list(string)
 }
+
+variable "project" {
+  type = string
+}
+
+variable "environment" {
+    type = string
+}
+    

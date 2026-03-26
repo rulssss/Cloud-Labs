@@ -2,13 +2,13 @@ name : Terraform
 
 on : 
 
-  pull_request :
+  pull_request:
     
   push:
     branches: [ "main" ]
 
 env:
-  TF_DIR: cloud/aws-state/environments/dev
+  TF_DIR: aws-state-remote-and-environments/environments/dev
 
 jobs :
   terraform :

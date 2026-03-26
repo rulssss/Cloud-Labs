@@ -25,10 +25,10 @@ jobs :
 
       - name : Terraform Init
         run : terraform init
-        working-directory : environments/dev
+        working-directory : aws-state-remote-and-environments/environments/dev
 
       - name : Terraform Plan
         run : terraform plan
-        working-directory : environments/dev
+        working-directory : aws-state-remote-and-environments/environments/dev
 
       

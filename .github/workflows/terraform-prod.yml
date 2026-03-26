@@ -1,13 +1,13 @@
 name: Terraform PROD
-#comentario test
+
 on:
   push:
     branches: [ "main" ]
     paths:
-      - "aws-state-remote-environments/environments/prod/**"
+      - "aws-state-remote-and-environments/environments/prod/**"
 
 env:
-  TF_DIR: aws-state-remote-environments/environments/prod
+  TF_DIR: aws-state-remote-and-environments/environments/prod
 
 jobs:
   terraform:

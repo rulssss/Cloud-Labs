@@ -1,14 +1,19 @@
 name : Terraform
 
 on : 
+
+  pull_ request :
+    
   push:
     branches: [ "main" ]
 
-  pull_request:
+env:
+  TF_DIR: cloud/aws-state/environments/dev
 
 jobs :
   terraform :
     runs-on : ubuntu-latest
+
     steps :
       - name : Checkout
         uses : actions/checkout@v3
@@ -25,10 +30,17 @@ jobs :
 
       - name : Terraform Init
         run : terraform init
-        working-directory : aws-state-remote-and-environments/environments/dev
+        working-directory : ${{ env.TF_DIR }}
 
-      - name : Terraform Plan
-        run : terraform plan
-        working-directory : aws-state-remote-and-environments/environments/dev
+      # PLAN SOLO EN PR
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan
+        working-directory: ${{ env.TF_DIR }}
 
+      # APPLY SOLO EN PUSH A MAIN
+      - name: Terraform Apply
+        if: github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: ${{ env.TF_DIR }}
       

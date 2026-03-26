@@ -6,7 +6,7 @@ terraform {
         dynamodb_table = "terraform-lock"
     }
 }
-#cambio prueba workflow 
+
 module "network" {
     source = "../../"
 

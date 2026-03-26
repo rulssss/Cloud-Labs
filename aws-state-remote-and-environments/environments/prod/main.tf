@@ -6,7 +6,7 @@ terraform {
         dynamodb_table = "terraform-lock"
     }
 }
-
+# comentario en prod
 module "network" {
     source = "../../"
     

@@ -2,7 +2,7 @@ name : Terraform
 
 on : 
 
-  pull_ request :
+  pull_request :
     
   push:
     branches: [ "main" ]

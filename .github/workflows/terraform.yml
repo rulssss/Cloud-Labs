@@ -3,13 +3,13 @@ name: Terraform
 on: 
   pull_request:
     paths:
-      - "environments/dev/**"
-      - "modules/**"
+      - "aws-state-remote-and-environments/environments/dev/**"
+      - "aws-state-remote-and-environments/modules/**"
   push:
     branches: [ "main" ]
     paths:
-      - "environments/dev/**"
-      - "modules/**"
+      - "aws-state-remote-and-environments/environments/dev/**"
+      - "aws-state-remote-and-environments/modules/**"
 
 env:
   TF_DIR: environments/dev

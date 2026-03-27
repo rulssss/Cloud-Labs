@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "environments/prod/**"
+      - "aws-state-remote-and-environments/environments/prod/**"
       
 
 env:
-  TF_DIR: environments/prod
+  TF_DIR: aws-state-remote-and-environments/environments/prod
 
 jobs:
   terraform:

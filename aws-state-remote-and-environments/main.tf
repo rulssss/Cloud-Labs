@@ -8,7 +8,7 @@ module "vpc" {
     project = var.project
     environment = var.environment 
 }
-
+# comentario de cambio test
 module "subnets" {
     source = "./modules/subnets"
     vpc_id = module.vpc.vpc_id

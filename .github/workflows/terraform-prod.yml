@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - "aws-state-remote-and-environments/environments/prod/**"
+      
 
 env:
   TF_DIR: aws-state-remote-and-environments/environments/prod

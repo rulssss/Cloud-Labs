@@ -12,7 +12,7 @@ on:
       - "aws-state-remote-and-environments/modules/**"
 
 env:
-  TF_DIR: environments/dev
+  TF_DIR: aws-state-remote-and-environments/environments/dev
 
 jobs:
   terraform:

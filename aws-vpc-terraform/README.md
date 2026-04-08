@@ -1,33 +1,33 @@
-# QUE HACE EL PROYECTO?
+# WHAT DOES THIS PROJECT DO?
 
-Este proyecto de Terraform crea una red base en AWS para un entorno `dev` en la region `sa-east-1`.
+This Terraform project creates a base network in AWS for a `dev` environment in the `sa-east-1` region.
 
-La infraestructura definida hace exactamente esto:
+The defined infrastructure does the following:
 
-- Crea una VPC con el rango `10.0.0.0/16`.
-- Crea 4 subnets dentro de esa VPC:
-	- 2 publicas: `10.0.1.0/24` y `10.0.2.0/24`.
-	- 2 privadas: `10.0.3.0/24` y `10.0.4.0/24`.
-- Configura las subnets publicas con asignacion automatica de IP publica al lanzar instancias.
-- Crea un Internet Gateway y lo asocia a la VPC.
-- Crea una tabla de rutas publica con salida a internet (`0.0.0.0/0`) a traves del Internet Gateway.
-- Asocia la tabla de rutas publica a las 2 subnets publicas.
-- Crea una tabla de rutas privada y la asocia a las 2 subnets privadas.
-- Crea un Security Group basico dentro de la VPC con estas reglas:
-	- Permite ingreso por SSH en el puerto `22` desde cualquier IP.
-	- Permite ingreso por HTTP en el puerto `80` desde cualquier IP.
-	- Permite todo el trafico de salida.
+- Creates a VPC with the CIDR block `10.0.0.0/16`.
+- Creates 4 subnets within that VPC:
+  - 2 public subnets: `10.0.1.0/24` and `10.0.2.0/24`.
+  - 2 private subnets: `10.0.3.0/24` and `10.0.4.0/24`.
+- Configures the public subnets to automatically assign a public IP when launching instances.
+- Creates an Internet Gateway and attaches it to the VPC.
+- Creates a public route table with internet access (`0.0.0.0/0`) through the Internet Gateway.
+- Associates the public route table with the 2 public subnets.
+- Creates a private route table and associates it with the 2 private subnets.
+- Creates a basic Security Group within the VPC with the following rules:
+  - Allows inbound SSH traffic on port `22` from any IP.
+  - Allows inbound HTTP traffic on port `80` from any IP.
+  - Allows all outbound traffic.
 
-Importante: las subnets privadas no tienen NAT Gateway ni salida directa a internet, porque la configuracion actual solo crea la ruta publica hacia el Internet Gateway.
+**Important:** The private subnets do not have a NAT Gateway or direct internet access, since the current configuration only creates a public route through the Internet Gateway.
 
-# COMO EJECUTARLO:
+# HOW TO RUN IT:
 
-# - terraform init
-# - terraform fmt
-# - terraform validate
-# - terraform plan
-# - terraform apply
+- `terraform init`
+- `terraform fmt`
+- `terraform validate`
+- `terraform plan`
+- `terraform apply`
 
-# Al finalizar aplciar:
+# TO DESTROY THE INFRASTRUCTURE:
 
-# - terraform destroy
+- `terraform destroy`

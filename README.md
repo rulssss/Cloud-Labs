@@ -1,67 +1,67 @@
 # 🌐 AWS Terraform Networking Lab (Foundations + Best Practices)
 
-Este repositorio representa la base de aprendizaje y evolución en **Infrastructure as Code (IaC)** utilizando Terraform sobre AWS.
+This repository represents a learning foundation and evolution path in **Infrastructure as Code (IaC)** using Terraform on AWS.
 
-El proyecto está dividido en dos etapas claras:
+The project is divided into two clear stages:
 
-1. 🧱 **Infraestructura base (fundamentos)**
-2. 🚀 **Infraestructura profesional (buenas prácticas)**
-
----
-
-## 📌 Objetivo
-
-Construir desde cero una red en AWS y evolucionarla hacia un diseño más cercano a entornos reales de trabajo, aplicando:
-
-* Modularización
-* Separación de entornos
-* Estado remoto
-* Automatización con CI/CD
+1. 🧱 **Base Infrastructure (Foundations)**
+2. 🚀 **Production-Ready Infrastructure (Best Practices)**
 
 ---
 
-## 🧱 Etapa 1 — Fundamentos de infraestructura
+## 📌 Objective
 
-En esta fase se construyó una red básica en AWS para entender cómo funciona Terraform.
+Build an AWS network from scratch and evolve it into a more production-like design by applying:
 
-### 🔧 Qué se implementa
+* Modularization
+* Environment separation
+* Remote state management
+* CI/CD automation
+
+---
+
+## 🧱 Stage 1 — Infrastructure Foundations
+
+In this phase, a basic AWS network was built to understand how Terraform works.
+
+### 🔧 What is implemented
 
 * VPC
-* Subnets públicas y privadas
+* Public and private subnets
 * Internet Gateway (IGW)
 * Route Tables
 * Security Groups
 
-### 🎯 Objetivo
+### 🎯 Goal
 
-Aprender:
+Learn:
 
-* Cómo Terraform crea recursos
-* Dependencias entre componentes
-* Estructura básica de archivos `.tf`
+* How Terraform creates resources
+* Dependencies between components
+* Basic `.tf` file structure
 
-### ⚠️ Limitaciones
+### ⚠️ Limitations
 
-* Código monolítico (sin módulos)
-* Sin separación de entornos
-* Estado local
-* Sin automatización
-
----
-
-## 🚀 Etapa 2 — Infraestructura profesional
-
-En esta fase el proyecto se refactoriza completamente aplicando buenas prácticas de la industria.
+* Monolithic code (no modules)
+* No environment separation
+* Local state
+* No automation
 
 ---
 
-## 🧠 Conceptos aplicados
+## 🚀 Stage 2 — Production-Ready Infrastructure
 
-### 📦 Modularización
+In this phase, the project is fully refactored using industry best practices.
 
-La infraestructura se divide en módulos reutilizables:
+---
 
-```text id="v2tqg8"
+## 🧠 Concepts Applied
+
+### 📦 Modularization
+
+Infrastructure is split into reusable modules:
+
+```text id="r2dj9f"
 modules/
 ├── vpc/
 ├── subnets/
@@ -71,65 +71,65 @@ modules/
 
 ---
 
-### 🌍 Separación de entornos
+### 🌍 Environment Separation
 
-```text id="f0z5h2"
+```text id="6t7d1p"
 environments/
 ├── dev/
 └── prod/
 ```
 
-* `dev` → pruebas y experimentación
-* `prod` → entorno controlado
+* `dev` → testing and experimentation
+* `prod` → controlled environment
 
 ---
 
-### 🗄️ Estado remoto
+### 🗄️ Remote State
 
-Terraform utiliza:
+Terraform uses:
 
-* **S3** → almacenamiento del state
-* **DynamoDB** → locking
+* **S3** → state storage
+* **DynamoDB** → state locking
 
-Esto permite:
+This enables:
 
-* Trabajo en equipo
-* Evitar corrupción del estado
-* Control centralizado
+* Team collaboration
+* Preventing state corruption
+* Centralized state management
 
 ---
 
-### ⚙️ CI/CD con GitHub Actions
+### ⚙️ CI/CD with GitHub Actions
 
-Se automatiza el despliegue:
+Deployment is automated:
 
 #### 🟢 DEV
 
-* Deploy automático
-* Se ejecuta en cada cambio en módulos o dev
+* Automatic deployment
+* Runs on every change in modules or dev
 
 #### 🔴 PROD
 
-* Deploy controlado
-* Requiere aprobación manual
-* No se actualiza automáticamente con cambios en módulos
+* Controlled deployment
+* Requires manual approval
+* Not automatically updated from module changes
 
 ---
 
-## 🔁 Flujo de trabajo
+## 🔁 Workflow
 
-```text id="s5ns9z"
-1. Se realizan cambios en módulos
-2. Se despliega automáticamente en DEV
-3. Se validan los cambios
-4. Se promueven a PROD mediante aprobación
+```text id="2a0z7s"
+1. Changes are made in modules
+2. Automatically deployed to DEV
+3. Changes are validated
+4. Promoted to PROD with approval
 ```
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Project Structure
 
-```text id="5p9fuy"
+```text id="m7kq1h"
 aws-state-remote-and-environments/
 ├── environments/
 │   ├── dev/
@@ -141,48 +141,48 @@ aws-state-remote-and-environments/
 
 ---
 
-## 💸 Control de costos
+## 💸 Cost Control
 
-Se evita el uso de recursos costosos como:
+Avoids the use of expensive resources such as:
 
 * ❌ NAT Gateway
 * ❌ EC2
 
-👉 Proyecto enfocado en networking (costo casi nulo)
+👉 Project focused on networking (near-zero cost)
 
 ---
 
-## ⚠️ Buenas prácticas implementadas
+## ⚠️ Best Practices Implemented
 
-* Uso de módulos reutilizables
-* Separación de entornos
-* Estado remoto
-* Automatización CI/CD
-* Deploy controlado en producción
-* Evitar cambios manuales en producción
-
----
-
-## 🧠 Aprendizajes clave
-
-* Terraform no es solo crear infraestructura, sino gestionarla
-* Separar entornos evita errores críticos
-* El estado remoto es fundamental en proyectos reales
-* CI/CD permite despliegues seguros y repetibles
+* Use of reusable modules
+* Environment separation
+* Remote state management
+* CI/CD automation
+* Controlled production deployments
+* Avoid manual changes in production
 
 ---
 
-## 🚀 Resultado
+## 🧠 Key Learnings
 
-Se logra una infraestructura:
+* Terraform is not just about creating infrastructure, but managing it
+* Environment separation prevents critical errors
+* Remote state is essential in real-world projects
+* CI/CD enables safe and repeatable deployments
+
+---
+
+## 🚀 Result
+
+Achieved infrastructure that is:
 
 * Reproducible
-* Escalable
-* Segura
-* Alineada con prácticas reales de la industria
+* Scalable
+* Secure
+* Aligned with real industry practices
 
 ---
 
-## 👤 Autor
+## 👤 Author
 
-Proyecto realizado como parte del aprendizaje progresivo de Terraform y AWS, evolucionando desde fundamentos hasta prácticas profesionales.
+Project developed as part of a progressive learning journey in Terraform and AWS, evolving from fundamentals to professional-level practices.
